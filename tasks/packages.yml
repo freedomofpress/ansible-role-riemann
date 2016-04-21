@@ -1,6 +1,27 @@
 ---
-- name: Download Riemann deb file.
+- name: Download Riemann deb package.
   become: yes
   get_url:
     url: "{{ riemann_download_url }}"
     dest: "{{ riemann_deb_file_fullpath }}"
+
+- name: Download Riemann checksum file.
+  become: yes
+  get_url:
+    url: "{{ riemann_download_url }}.md5"
+    dest: "{{ riemann_deb_file_fullpath }}.md5"
+
+  # If the get_url task didn't change, the checksum
+  # won't be available in the registered var, so let's
+  # reread the checksum every time.
+- name: Read checksum for Riemann deb package.
+  stat:
+    path: "{{ riemann_deb_file_fullpath }}"
+  register: riemann_download_checksum_result
+
+- name: Validate checksum for deb package.
+  command: cat {{ riemann_deb_file_fullpath }}.md5
+  register: riemann_checksum_result
+  changed_when: false
+  failed_when: riemann_checksum_result.stdout !=
+               "{{ riemann_download_checksum_result.stat.md5 }}  {{ riemann_deb_file_fullpath|basename }}"
