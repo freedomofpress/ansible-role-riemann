@@ -10,6 +10,9 @@
   get_url:
     url: "{{ riemann_download_url }}"
     dest: "{{ riemann_deb_file_fullpath }}"
+    owner: root
+    group: root
+    mode: "0644"
 
 - name: Download Riemann checksum file.
   become: yes
