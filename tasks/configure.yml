@@ -6,16 +6,16 @@
   file:
     path: /etc/riemann/conf.d
     state: directory
-    owner: "{{ riemann_user }}"
-    group: "{{ riemann_user }}"
+    owner: riemann
+    group: riemann
     mode: "0755"
 
 - name: Create configuration file.
   template:
     src: riemann.config.j2
     dest: /etc/riemann/riemann.config
-    owner: "{{ riemann_user }}"
-    group: "{{ riemann_user }}"
+    owner: riemann
+    group: riemann
     mode: "0644"
   notify: restart riemann
 
@@ -23,8 +23,8 @@
   template:
     src: slack-alerts.clj.j2
     dest: /etc/riemann/conf.d/slack-alerts.clj
-    owner: "{{ riemann_user }}"
-    group: "{{ riemann_user }}"
+    owner: riemann
+    group: riemann
     mode: "0644"
   notify: restart riemann
 
