@@ -1,0 +1,26 @@
+---
+# Riemann supports reloading configs without restarting.
+# However, the init script may need work to support. Occasionally I see:
+# $ sudo systemctl status riemann
+# ● riemann.service - LSB: Riemann server
+#    Loaded: loaded (/etc/init.d/riemann)
+#    Active: active (exited) since Mon 2016-02-22 20:28:27 EST; 1h 49min ago
+#   Process: 18365 ExecStop=/etc/init.d/riemann stop (code=exited, status=0/SUCCESS)
+#   Process: 23854 ExecReload=/etc/init.d/riemann reload (code=exited, status=0/SUCCESS)
+#   Process: 18375 ExecStart=/etc/init.d/riemann start (code=exited, status=0/SUCCESS)
+#
+# Feb 22 20:38:55 riemann-server riemann[20299]: Reloading Riemann: riemannstart-stop-daemon: warning: failed to kill 18381: No such process
+# Feb 22 20:38:55 riemann-server riemann[20299]: failed!
+# Feb 22 22:18:13 riemann-server riemann[23854]: Reloading Riemann: riemannstart-stop-daemon: warning: failed to kill 18381: No such process
+# Feb 22 22:18:13 riemann-server riemann[23854]: failed!#
+#
+# Restarting the service, rather than reloading, fixes.
+- name: reload riemann
+  service:
+    name: riemann
+    state: reloaded
+
+- name: restart riemann
+  service:
+    name: riemann
+    state: restarted
