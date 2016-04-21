@@ -1,4 +1,7 @@
 ---
+ansible:
+  playbook: examples/test.yml
+
 vagrant:
   platforms:
     - name: jessie64
