@@ -55,7 +55,7 @@ describe file('/etc/riemann/riemann.config') do
 end
 
 # Would be better to read the version dynamically from a variable somewhere.
-riemann_version = '0.2.10'
+riemann_version = '0.2.11'
 describe file("/usr/local/src/riemann_#{riemann_version}_all.deb") do
   it { should exist }
   it { should be_file }
