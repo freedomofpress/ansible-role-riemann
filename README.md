@@ -12,6 +12,35 @@ Requirements
 Role Variables
 --------------
 ```yaml
+# Version of the deb package to install. You can view the most
+# recent release here: https://github.com/riemann/riemann/releases
+riemann_version: "0.2.11"
+
+riemann_download_directory: /usr/local/src
+riemann_download_url: "https://aphyr.com/riemann/riemann_{{ riemann_version }}_all.deb"
+riemann_deb_file_fullpath: "{{ riemann_download_directory }}/{{ riemann_download_url | basename }}"
+
+# Ignored by default. Override to add Slack alerts based on tags.
+# Requires keys: account, token, channel. Example structure:
+#
+#   riemann_slack_credentials:
+#     channel: "#alerts"
+#     account: exampleorg
+#     token: jf4PAD9s1T1N6m5S6iMngAfG
+#
+# Note: the value for "token" should be the last element after separating
+# the URL by '/'. So paste the webhook URL into this one-liner:
+#
+#   perl -F/ -lanE 'say $F[-1]'
+#
+# and store the returned value as the "token".
+riemann_slack_credentials: {}
+
+# Name of the Logstash tag to trigger alerts.
+riemann_slack_tag: slack_alert
+
+# Disable verbose logging, useful for standing up the server.
+riemann_debug_logging: false
 ```
 
 Example Playbook
