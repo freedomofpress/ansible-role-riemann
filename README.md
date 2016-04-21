@@ -7,6 +7,7 @@ Intended for use with the [freedomofpress.elk] role.
 Requirements
 ------------
 * a Logstash server to receive events from (see the [freedomofpress.elk] role)
+* web service integration for alerting (currently only [Slack] is supported)
 
 Role Variables
 --------------
@@ -55,7 +56,8 @@ The following resources were invaluable in creating this role.
 * [Clojure for the Brave and True](http://www.braveclojure.com/do-things/)
 * [An Introduction to Riemann](https://kartar.net/2014/12/an-introduction-to-riemann/)
 * [Programmatic Real-time Monitoring and Alerting with Riemann](http://www.stuartgunter.org/programmatic-realtime-monitoring-alerting-riemann/)
-* [@dhruvbansal's riemann role](https://github.com/dhruvbansal/riemann-server-ansible-role)
+* [Riemann Slack documentation](http://riemann.io/api/riemann.slack.html)
+* [Ansible role for Riemann by @dhruvbansal](https://github.com/dhruvbansal/riemann-server-ansible-role)
 
 License
 -------
@@ -66,3 +68,4 @@ MIT
 [ServerSpec]: http://serverspec.org/
 [freedomofpress.elk]: https://github.com/freedomofpress/ansible-role-elk
 [Riemann]: http://riemann.io
+[Slack]: https://slack.com

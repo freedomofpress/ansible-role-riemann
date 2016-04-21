@@ -7,7 +7,19 @@ riemann_deb_file_fullpath: "{{ riemann_download_directory }}/{{ riemann_download
 riemann_user: riemann
 
 # Ignored by default. Override to add Slack alerts based on tags.
-# Requires keys: account, token, channel
+# Requires keys: account, token, channel. Example structure:
+#
+#   riemann_slack_credentials:
+#     channel: "#alerts"
+#     account: exampleorg
+#     token: jf4PAD9s1T1N6m5S6iMngAfG
+#
+# Note: the value for "token" should be the last element after separating
+# the URL by '/'. So paste the webhook URL into this one-liner:
+#
+#   perl -F/ -lanE 'say $F[-1]'
+#
+# and store the returned value as the "token".
 riemann_slack_credentials: {}
 
 # Name of the Logstash tag to trigger alerts.
