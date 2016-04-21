@@ -1,12 +1,12 @@
 # Riemann Ansible role
 
-Ansible role for configuring the [Riemann] stream processor, for alerting
-on Logstash events sent from an ELK logserver.
+Ansible role for configuring the [Riemann] stream processor
+for alerting on Logstash events.
 Intended for use with the [freedomofpress.elk] role.
 
 Requirements
 ------------
-* an ELK logserver to receive events from (see the [freedomofpress.elk] role)
+* a Logstash server to receive events from (see the [freedomofpress.elk] role)
 
 Role Variables
 --------------
@@ -47,11 +47,15 @@ molecule verify
 
 See the [Molecule] docs for more info.
 
-Contributions
--------------
+Further Reading
+---------------
 The following resources were invaluable in creating this role.
 
 * [Riemann official guide](http://riemann.io/howto.html#putting-riemann-into-production)
+* [Clojure for the Brave and True](http://www.braveclojure.com/do-things/)
+* [An Introduction to Riemann](https://kartar.net/2014/12/an-introduction-to-riemann/)
+* [Programmatic Real-time Monitoring and Alerting with Riemann](http://www.stuartgunter.org/programmatic-realtime-monitoring-alerting-riemann/)
+* [@dhruvbansal's riemann role](https://github.com/dhruvbansal/riemann-server-ansible-role)
 
 License
 -------
