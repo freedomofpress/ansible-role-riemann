@@ -25,3 +25,12 @@
   changed_when: false
   failed_when: riemann_checksum_result.stdout !=
                "{{ riemann_download_checksum_result.stat.md5 }}  {{ riemann_deb_file_fullpath|basename }}"
+
+- name: Install Riemann deb package.
+  become: yes
+  apt:
+    deb: "{{ riemann_deb_file_fullpath }}"
+    state: installed
+    dpkg_options: skip-same-version,force-confdef,force-confold
+  register: riemann_install_result
+  changed_when: "'dpkg: version {{ riemann_version }} of riemann already installed' not in riemann_install_result.stderr"
