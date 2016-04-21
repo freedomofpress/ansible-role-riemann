@@ -1,0 +1,5 @@
+---
+riemann_version: "0.10.0"
+riemann_download_directory: /usr/local/src
+riemann_download_url: "https://aphyr.com/riemann/riemann_{{ riemann_version }}_all.deb"
+riemann_deb_file_fullpath: "{{ riemann_download_directory }}/{{ riemann_download_url | basename }}"

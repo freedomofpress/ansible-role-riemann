@@ -1,0 +1,6 @@
+---
+- name: Download Riemann deb file.
+  become: yes
+  get_url:
+    url: "{{ riemann_download_url }}"
+    dest: "{{ riemann_deb_file_fullpath }}"
