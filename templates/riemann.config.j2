@@ -1,0 +1,31 @@
+; Listen only on 5555 for TCP logs. Riemann docs strongly suggest forcing TCP over UDP.
+; `ws-server` will need to be explicitly enabled if using riemann-dash.
+(let [host "127.0.0.1"]
+  (tcp-server {:host host :port 5555}))
+
+; Expire old events from the index every 5 seconds.
+(periodically-expire 5)
+
+; Import custom functions, e.g. for Slack alerts
+(include "/etc/riemann/conf.d")
+
+(let [index (index)]
+  ; Inbound events will be passed to these streams:
+  (streams
+    (default :ttl 60
+      ; Index all events immediately.
+      index
+      {% if riemann_debug_logging -%}
+      prn
+      #(info %)
+      {% endif %}
+
+      {% if 'account' in riemann_slack_credentials and 'token' in riemann_slack_credentials -%}
+      ; Send alerts to Slack
+      (where (tagged "{{ riemann_slack_tag }}") slacker)
+      {% endif %}
+
+      ; Log expired events.
+      (expired
+        (fn [event] (info "expired" event))))))
+

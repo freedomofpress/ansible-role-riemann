@@ -1,0 +1,30 @@
+{% if 'account' in riemann_slack_credentials and 'token' in riemann_slack_credentials %}
+; Slack API setup
+(def credentials {:account "{{ riemann_slack_credentials.account }}", :token "{{ riemann_slack_credentials.token }}"})
+
+
+(defn slack-formatter-terse
+  "Terse formatter for Slack alerts, obfuscates sensitive data."
+  [events]
+  {:text (str "Received `" (:type events) "` alert from `" (:host events) "`: " (:message events))})
+
+(defn slack-formatter-verbose
+  "Verbose version of Slack API formatter, includes actual message content."
+  ; Modified version of the default slack-formatter that ships with Riemann.
+  ; Snips out the unused State, Metric, and Tags fields, otherwise pretty much the same.
+  [events]
+  {:attachments
+   [{:fields
+     [{:title "Riemann Event"
+       :value (str "Host:   " (or (:host events) "-") "\n"
+                   "Service:   " (or (:type events) "-") "\n"
+                   "Description:   " (or (:message events) "-") "\n")
+       :short true}]}]})
+
+; Throttling the messages one per 60 seconds to avoid spamming the Slack channel
+(def slacker (throttle 1 60 (slack credentials {:username "Riemann"
+                                 :channel "{{ riemann_slack_credentials.channel }}"
+                                 :icon ":japanese_ogre:"
+                                 :formatter slack-formatter-verbose})))
+{% endif %}
+

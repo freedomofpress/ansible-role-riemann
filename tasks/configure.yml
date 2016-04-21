@@ -1,0 +1,35 @@
+---
+  # A note about permissions: the post-inst scripts for the riemann deb package
+  # chown /etc/riemann to riemann:riemann recursively. Setting the same permissions
+  # here rather than the more typical root:root 0644.
+- name: Create configuration directory.
+  file:
+    path: /etc/riemann/conf.d
+    state: directory
+    owner: "{{ riemann_user }}"
+    group: "{{ riemann_user }}"
+    mode: "0755"
+
+- name: Create configuration file.
+  template:
+    src: riemann.config.j2
+    dest: /etc/riemann/riemann.config
+    owner: "{{ riemann_user }}"
+    group: "{{ riemann_user }}"
+    mode: "0644"
+  notify: restart riemann
+
+- name: Copy extra configuration files.
+  template:
+    src: slack-alerts.clj.j2
+    dest: /etc/riemann/conf.d/slack-alerts.clj
+    owner: "{{ riemann_user }}"
+    group: "{{ riemann_user }}"
+    mode: "0644"
+  notify: restart riemann
+
+- name: Start riemann service.
+  service:
+    name: riemann
+    state: started
+    enabled: yes
