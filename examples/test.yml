@@ -3,4 +3,4 @@
   hosts: all
   become: yes
   roles:
-    - role: ansible-role-riemann-2
+    - role: ansible-role-riemann
