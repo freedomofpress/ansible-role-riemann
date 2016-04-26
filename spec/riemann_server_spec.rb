@@ -29,10 +29,6 @@ describe user('riemann') do
   it { should belong_to_group 'riemann' }
 end
 
-describe file('/etc/logstash/conf.d') do
-  it { should_not exist }
-end
-
 riemann_directories = %w(
   /usr/share/riemann
   /etc/riemann
