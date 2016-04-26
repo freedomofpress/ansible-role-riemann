@@ -21,8 +21,12 @@
                    "Description:   " (or (:message events) "-") "\n")
        :short true}]}]})
 
-; Throttling the messages one per 60 seconds to avoid spamming the Slack channel
-(def slacker (throttle 1 60 (slack credentials {:username "Riemann"
+; Throttling alerts to maximum of 10 per second. The Slack API docs declare a soft
+; limit of 1 message per second, but permits "bursts over that limit for short periods":
+;   https://api.slack.com/docs/rate-limits
+; The 10/s throttle is merely a sanity check; you should ensure elsewhere in your
+; pipeline that alerts won't hammer the Slack endpoint.
+(def slacker (throttle 10 1 (slack credentials {:username "Riemann"
                                  :channel "{{ riemann_slack_credentials.channel }}"
                                  :icon ":japanese_ogre:"
                                  :formatter slack-formatter-verbose})))
