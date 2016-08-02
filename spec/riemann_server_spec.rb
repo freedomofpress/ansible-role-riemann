@@ -6,20 +6,7 @@ end
 
 describe service('riemann') do
   it { should be_running }
-end
-
-unless os[:family] == 'debian' && os[:release] >= '8'
-  # Debian 8 init script support a bit fishy in Serverspec.
-  # Will throw a NotImplementedError if attempted.
-  # NotImplementedError:
-  #   check_is_installed is not implemented in \
-  #   Specinfra::Command::Debian::V8::Service
-  describe service('riemann') do
-    it { should be_enabled }
-    it { should be_installed }
-  end
-  its('processes') { should eq ['java'] }
-
+  it { should be_enabled }
 end
 
 describe user('riemann') do
