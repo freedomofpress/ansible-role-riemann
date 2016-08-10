@@ -1,9 +1,24 @@
 ---
-- name: Install Java.
+- name: Install OpenJDK7.
   become: yes
   apt:
     name: openjdk-7-jre-headless
     state: present
+  when: (ansible_distribution == "Debian")
+
+- name: Install OpenJDK7.
+  become: yes
+  apt:
+    name: openjdk-7-jre-headless
+    state: present
+  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version <= "14")
+
+- name: Install OpenJDK8.
+  become: yes
+  apt:
+    name: openjdk-8-jre-headless
+    state: present
+  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version >= "16")
 
 - name: Download Riemann deb package.
   become: yes
