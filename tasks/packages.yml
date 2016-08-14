@@ -2,7 +2,7 @@
 - name: Install Java.
   become: yes
   apt:
-    name: openjdk-7-jre-headless
+    name: default-jre-headless
     state: present
 
 - name: Download Riemann deb package.
