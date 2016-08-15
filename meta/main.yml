@@ -11,7 +11,8 @@ galaxy_info:
         - jessie
     - name: Ubuntu
       versions:
-        - wily
+        - trusty
+        - xenial
   galaxy_tags:
     - alerting
     - logging
