@@ -4,6 +4,8 @@
   apt:
     name: default-jre-headless
     state: present
+    update_cache: yes
+    cache_valid_time: 3600
 
 - name: Download Riemann deb package.
   become: yes
