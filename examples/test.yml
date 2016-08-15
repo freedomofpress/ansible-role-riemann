@@ -1,4 +1,10 @@
 ---
+- name: Configure Python for Ansible.
+  gather_facts: no
+  hosts: all
+  tasks:
+    - raw: sudo apt-get install -y python python-apt
+
 - name: Test installation of riemann server role.
   hosts: all
   become: yes
