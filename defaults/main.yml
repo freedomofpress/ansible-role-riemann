@@ -33,3 +33,6 @@ riemann_slack_tag: slack_alert
 
 # Disable verbose logging, useful for standing up the server.
 riemann_debug_logging: false
+
+# Allow override ability of installed JVM
+riemann_jvm_pkg: default-jre-headless

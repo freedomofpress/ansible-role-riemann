@@ -2,7 +2,7 @@
 - name: Install Java.
   become: yes
   apt:
-    name: default-jre-headless
+    name: "{{ riemann_jvm_pkg }}"
     state: present
     update_cache: yes
     cache_valid_time: 3600
