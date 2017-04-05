@@ -36,3 +36,17 @@ riemann_debug_logging: false
 
 # Allow override ability of installed JVM
 riemann_jvm_pkg: default-jre-headless
+
+riemann_create_folders:
+  - "conf.d"
+  - "utils"
+
+riemann_default_templates:
+  - src: riemann.config.j2
+    dest: /etc/riemann/riemann.config
+  - src: slack-alerts.clj.j2
+    dest: /etc/riemann/conf.d/slack-alerts.clj
+
+riemann_optional_baseconfig: ""
+riemann_optional_addfiles: []
+riemann_optional_addtemplates: []
