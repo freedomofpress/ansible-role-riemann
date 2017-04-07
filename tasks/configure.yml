@@ -18,7 +18,6 @@
     owner: riemann
     group: riemann
     mode: "0644"
-  when: "riemann_default_templates != []"
   with_items: "{{ riemann_default_templates }}"
   notify: restart riemann
 
@@ -39,7 +38,6 @@
     owner: riemann
     group: riemann
     mode: "0644"
-  when: "riemann_optional_addfiles"
   with_fileglob: "{{ riemann_optional_addfiles }}"
   notify: restart riemann
 
@@ -51,7 +49,6 @@
     group: riemann
     mode: "0644"
   notify: restart riemann
-  when: "riemann_optional_addtemplates"
   with_fileglob: "{{ riemann_optional_addtemplates }}"
 
 - name: Start riemann service.
