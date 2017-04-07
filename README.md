@@ -46,6 +46,21 @@ riemann_slack_tag: slack_alert
 
 # Disable verbose logging, useful for standing up the server.
 riemann_debug_logging: false
+
+# Allow override ability of installed JVM
+riemann_jvm_pkg: default-jre-headless
+
+# Remote config directories to be created. Config files, via fileglob
+# or otherwise, will be added to these directories.
+riemann_create_folders:
+  - "conf.d"
+  - "utils"
+
+riemann_default_templates:
+  - src: riemann.config.j2
+    dest: /etc/riemann/riemann.config
+  - src: slack-alerts.clj.j2
+    dest: /etc/riemann/conf.d/slack-alerts.clj
 ```
 
 Example Playbook
