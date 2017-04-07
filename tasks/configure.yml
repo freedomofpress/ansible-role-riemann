@@ -4,29 +4,52 @@
   # here rather than the more typical root:root 0644.
 - name: Create configuration directory.
   file:
-    path: /etc/riemann/conf.d
+    path: "/etc/riemann/{{ item }}"
     state: directory
     owner: riemann
     group: riemann
     mode: "0755"
+  with_items: "{{ riemann_create_folders }}"
 
-- name: Create configuration file.
+- name: Copy over role default templates
   template:
-    src: riemann.config.j2
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: riemann
+    group: riemann
+    mode: "0644"
+  with_items: "{{ riemann_default_templates }}"
+  notify: restart riemann
+
+- name: Copy non-template riemann.config
+  copy:
+    src: "{{ riemann_optional_baseconfig }}"
     dest: /etc/riemann/riemann.config
     owner: riemann
     group: riemann
     mode: "0644"
+  when: "riemann_optional_baseconfig != ''"
   notify: restart riemann
 
-- name: Copy extra configuration files.
+- name: Copy additional files by fileglob
+  copy:
+    src: "{{ item }}"
+    dest: /etc/riemann/conf.d/
+    owner: riemann
+    group: riemann
+    mode: "0644"
+  with_fileglob: "{{ riemann_optional_addfiles }}"
+  notify: restart riemann
+
+- name: Copy additional templates by fileglob
   template:
-    src: slack-alerts.clj.j2
-    dest: /etc/riemann/conf.d/slack-alerts.clj
+    src: "{{ item }}"
+    dest: /etc/riemann/utils/
     owner: riemann
     group: riemann
     mode: "0644"
   notify: restart riemann
+  with_fileglob: "{{ riemann_optional_addtemplates }}"
 
 - name: Start riemann service.
   service:
