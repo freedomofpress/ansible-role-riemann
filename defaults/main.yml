@@ -37,6 +37,8 @@ riemann_debug_logging: false
 # Allow override ability of installed JVM
 riemann_jvm_pkg: default-jre-headless
 
+# Remote config directories to be created. Config files, via fileglob
+# or otherwise, will be added to these directories.
 riemann_create_folders:
   - "conf.d"
   - "utils"
@@ -47,6 +49,9 @@ riemann_default_templates:
   - src: slack-alerts.clj.j2
     dest: /etc/riemann/conf.d/slack-alerts.clj
 
+# Override the default template with a unified config file.
 riemann_optional_baseconfig: ""
+# Provide additional config files, via fileglob. Files and templates
+# will be transfered using `copy` and `template`, respectively.
 riemann_optional_addfiles: []
 riemann_optional_addtemplates: []
