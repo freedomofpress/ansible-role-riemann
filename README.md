@@ -55,12 +55,22 @@ riemann_jvm_pkg: default-jre-headless
 riemann_create_folders:
   - "conf.d"
   - "utils"
+  - "vars"
 
 riemann_default_templates:
   - src: riemann.config.j2
     dest: /etc/riemann/riemann.config
   - src: slack-alerts.clj.j2
     dest: /etc/riemann/conf.d/slack-alerts.clj
+
+# Override the default template with a unified config file.
+riemann_optional_baseconfig: ""
+# Provide additional config files, via fileglob.
+riemann_optional_addconfs: []
+riemann_optional_addutils: []
+
+# Key/values that riemann can import and utilize
+riemann_alerts_auth_map: {}
 ```
 
 Example Playbook
