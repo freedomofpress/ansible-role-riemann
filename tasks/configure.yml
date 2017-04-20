@@ -21,7 +21,7 @@
   with_items: "{{ riemann_default_templates }}"
   notify: restart riemann
 
-- name: Copy non-template riemann.config
+- name: Copy riemann.config
   copy:
     src: "{{ riemann_optional_baseconfig }}"
     dest: /etc/riemann/riemann.config
@@ -31,25 +31,35 @@
   when: "riemann_optional_baseconfig != ''"
   notify: restart riemann
 
-- name: Copy additional files by fileglob
+- name: Copy additional configuration files
   copy:
     src: "{{ item }}"
-    dest: /etc/riemann/conf.d/
+    dest: "/etc/riemann/conf.d"
     owner: riemann
     group: riemann
     mode: "0644"
-  with_fileglob: "{{ riemann_optional_addfiles }}"
+  with_fileglob: "{{ riemann_optional_addconfs }}"
   notify: restart riemann
 
-- name: Copy additional templates by fileglob
-  template:
+- name: Copy additional clojure utility scripts
+  copy:
     src: "{{ item }}"
     dest: /etc/riemann/utils/
     owner: riemann
     group: riemann
     mode: "0644"
   notify: restart riemann
-  with_fileglob: "{{ riemann_optional_addtemplates }}"
+  with_fileglob: "{{ riemann_optional_addutils }}"
+
+- name: Copy hashmap variables
+  template:
+    src: config.clj.j2
+    dest: /etc/riemann/vars/config.clj
+    owner: riemann
+    group: riemann
+    mode: "0644"
+  when: riemann_alerts_auth_map != {}
+  notify: restart riemann
 
 - name: Start riemann service.
   service:
