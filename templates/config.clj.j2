@@ -1,0 +1,11 @@
+(ns vars.config
+"Utilities configuration file")
+
+(def config
+{% raw %}{{% endraw %}
+{% for k,v in riemann_alerts_auth_map.iteritems() %}
+ :{{ k }} "{{ v }}"
+{% endfor %}
+
+{% raw %}}{% endraw %}
+)
