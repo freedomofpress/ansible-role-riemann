@@ -6,6 +6,8 @@
 {% for k,v in riemann_alerts_auth_map.iteritems() %}
  :{{ k }} "{{ v }}"
 {% endfor %}
-
+{% for k,v in riemann_alerts_auth_map_int.iteritems() %}
+ :{{ k }} {{ v | to_json }}
+{% endfor %}
 {% raw %}}{% endraw %}
 )
