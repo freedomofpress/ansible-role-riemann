@@ -1,7 +1,7 @@
 ---
 # Version of the deb package to install. You can view the most
 # recent release here: https://github.com/riemann/riemann/releases
-riemann_version: "0.2.13"
+riemann_version: "0.3.0"
 
 riemann_download_directory: /usr/local/src
 riemann_download_url: "https://github.com/riemann/riemann/releases/download/{{riemann_version}}/riemann_{{riemann_version}}_all.deb"
