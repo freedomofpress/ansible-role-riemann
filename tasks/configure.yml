@@ -60,6 +60,7 @@
     mode: "0644"
   when: riemann_alerts_auth_map != {}
   notify: restart riemann
+  tags: hashmap
 
 - name: Start riemann service.
   service:
